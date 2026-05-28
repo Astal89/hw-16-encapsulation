@@ -1,3 +1,6 @@
-void main() {
-    System.out.println("Hello world!!!");
+class App {
+    public static void main(String[] args) {
+        System.out.println("hello");
+        int test = 1;
+    }
 }
