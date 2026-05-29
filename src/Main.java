@@ -3,6 +3,6 @@ class App {
         System.out.println("hello");
         byte a = 1;
         byte b = 1;
-        byte c = (byte)(a +  b);
+        byte c = (byte)(a + b);
     }
 }
