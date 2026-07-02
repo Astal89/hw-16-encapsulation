@@ -1,14 +1,14 @@
 package org.skypro.skyshop.product;
 
 public class FixPriceProduct extends Product {
-    private static final int PRICE = 100;
+    private static final int FIXED_PRICE = 100;
 
     public FixPriceProduct(String name) {
         super(name);
     }
 
     public int getPrice() {
-        return PRICE;
+        return FIXED_PRICE;
     }
 
     @Override
