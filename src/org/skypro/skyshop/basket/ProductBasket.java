@@ -32,24 +32,31 @@ public class ProductBasket {
         return totalPrice;
     }
 
+    // количество специальных продуктов
+    public int getSpecialProductsCount() {
+        int specialProductsCount = 0;
+        for (var product : products) {
+            if (product != null && product.isSpecial()) {
+                specialProductsCount++;
+            }
+        }
+        return specialProductsCount;
+    }
+
     // печать содержимого корзины
     public void printProducts() {
         boolean isEmpty = true;
-        int specialProductsCount = 0;
         for (var product : products) {
             if(product != null) {
                 System.out.println(product);
                 isEmpty = false;
-                if(product.isSpecial()) {
-                    specialProductsCount++;
-                }
             }
         }
         if (isEmpty) {
             System.out.println("В корзине пусто");
         } else {
             System.out.println("Итого: " + getTotalPrice());
-            System.out.println("Специальных товаров: " + specialProductsCount);
+            System.out.println("Специальных товаров: " + getSpecialProductsCount());
         }
     }
 
