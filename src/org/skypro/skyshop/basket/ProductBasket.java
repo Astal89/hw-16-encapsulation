@@ -1,15 +1,17 @@
 package org.skypro.skyshop.basket;
+
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 
 public class ProductBasket {
     private Product[] products = new Product[5];
+
     // добавление продукта в корзину
     public void addProduct(Product product) {
         boolean basketIsFull = true;
         for (int i = 0; i < products.length; i++) {
-            if(products[i] == null) {
+            if (products[i] == null) {
                 products[i] = product;
                 basketIsFull = false;
                 break;
@@ -24,7 +26,7 @@ public class ProductBasket {
     public int getTotalPrice() {
         int totalPrice = 0;
         for (var product : products) {
-            if(product == null) {
+            if (product == null) {
                 continue;
             }
             totalPrice += product.getPrice();
@@ -47,7 +49,7 @@ public class ProductBasket {
     public void printProducts() {
         boolean isEmpty = true;
         for (var product : products) {
-            if(product != null) {
+            if (product != null) {
                 System.out.println(product);
                 isEmpty = false;
             }
@@ -63,10 +65,10 @@ public class ProductBasket {
     // проверка наличия продукта в корзине
     public boolean hasProduct(String name) {
         for (var product : products) {
-            if(product == null) {
+            if (product == null) {
                 continue;
             }
-            if(product.getName().equals(name)) {
+            if (product.getName().equals(name)) {
                 return true;
             }
         }
