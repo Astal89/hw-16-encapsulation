@@ -1,5 +1,8 @@
 package org.skypro.skyshop.search;
 
+import org.skypro.skyshop.exception.BestResultNotFound;
+import org.skypro.skyshop.product.Product;
+
 public class SearchEngine {
     private final Searchable[] items;
 
@@ -21,6 +24,31 @@ public class SearchEngine {
             if (count == 5) {
                 break;
             }
+        }
+        return result;
+    }
+
+    public Searchable searchBest(String content) throws BestResultNotFound {
+        Searchable result = null;
+        int maxMatches = 0;
+        for (Searchable item : items) {
+            if (item == null) {
+                continue;
+            }
+            // поиск количества вхождений подстроки
+            int index = item.getSearchTerm().toLowerCase().indexOf(content.toLowerCase());
+            int matches = 0;
+            while(index != -1) {
+                matches++;
+                index = item.getSearchTerm().toLowerCase().indexOf(content.toLowerCase(), index + content.length());
+            }
+            if(matches > maxMatches) {
+                result = item;
+                maxMatches = matches;
+            }
+        }
+        if(result == null) {
+            throw new BestResultNotFound(content);
         }
         return result;
     }
