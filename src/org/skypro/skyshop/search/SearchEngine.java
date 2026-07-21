@@ -3,26 +3,26 @@ package org.skypro.skyshop.search;
 import org.skypro.skyshop.exception.BestResultNotFound;
 import org.skypro.skyshop.product.Product;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 public class SearchEngine {
-    private final Searchable[] items;
+    private final List<Searchable> items = new LinkedList<>();
+    private final int capacity;
 
     public SearchEngine(int capacity) {
-        items = new Searchable[capacity];
+        this.capacity = capacity;
     }
 
-    public Searchable[] search(String content) {
-        Searchable[] result = new Searchable[5];
-        int count = 0;
+    public List<Searchable> search(String content) {
+        List<Searchable> result = new ArrayList<>();
         for (Searchable item : items) {
             if (item == null) {
                 continue;
             }
             if (item.getSearchTerm().toLowerCase().contains(content.toLowerCase())) {
-                result[count] = item;
-                count++;
-            }
-            if (count == 5) {
-                break;
+                result.add(item);
             }
         }
         return result;
@@ -54,15 +54,9 @@ public class SearchEngine {
     }
 
     public void add(Searchable item) {
-        boolean isFull = true;
-        for (int i = 0; i < items.length; i++) {
-            if (items[i] == null) {
-                items[i] = item;
-                isFull = false;
-                break;
-            }
-        }
-        if (isFull) {
+        if(items.size() < capacity) {
+            items.add(item);
+        } else {
             System.out.println("Невозможно добавить элемент для поиска. Превышен допустимый лимит.");
         }
     }
