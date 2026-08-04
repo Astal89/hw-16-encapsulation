@@ -6,6 +6,7 @@ import org.skypro.skyshop.product.Product;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeMap;
 
 public class SearchEngine {
     private final List<Searchable> items = new LinkedList<>();
@@ -15,14 +16,14 @@ public class SearchEngine {
         this.capacity = capacity;
     }
 
-    public List<Searchable> search(String content) {
-        List<Searchable> result = new ArrayList<>();
+    public TreeMap<String, Searchable> search(String content) {
+        TreeMap<String, Searchable> result = new TreeMap<>();
         for (Searchable item : items) {
             if (item == null) {
                 continue;
             }
             if (item.getSearchTerm().toLowerCase().contains(content.toLowerCase())) {
-                result.add(item);
+                result.put(item.getSearchTerm(), item);
             }
         }
         return result;
