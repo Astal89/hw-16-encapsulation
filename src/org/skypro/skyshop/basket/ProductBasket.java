@@ -4,22 +4,28 @@ import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 
+import java.util.*;
+
 public class ProductBasket {
-    private Product[] products = new Product[5];
+    private final List<Product> products = new LinkedList<>();
 
     // добавление продукта в корзину
     public void addProduct(Product product) {
-        boolean basketIsFull = true;
-        for (int i = 0; i < products.length; i++) {
-            if (products[i] == null) {
-                products[i] = product;
-                basketIsFull = false;
-                break;
+        products.add(product);
+    }
+
+    // удаление продукта из корзины
+    public List<Product> deleteProductsByName(String name) {
+        List<Product> deleted = new ArrayList<>();
+        Iterator<Product> iterator = products.iterator();
+        while (iterator.hasNext()) {
+            Product p = iterator.next();
+            if (Objects.equals(p.getName(), name)) {
+                deleted.add(p);
+                iterator.remove();
             }
         }
-        if (basketIsFull) {
-            System.out.println("Невозможно добавить продукт");
-        }
+        return deleted;
     }
 
     // получение общей стоимости корзины
@@ -77,7 +83,7 @@ public class ProductBasket {
 
     // очистка корзины
     public void clear() {
-        products = new Product[5];
+        products.clear();
     }
 
 }

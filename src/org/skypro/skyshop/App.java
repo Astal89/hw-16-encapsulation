@@ -11,19 +11,14 @@ import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.SimpleTimeZone;
 
 class App {
     public static void main(String[] args) {
         ProductBasket basket = new ProductBasket();
         // добавление продуктов в корзину
-        basket.addProduct(new SimpleProduct("Батон", 50));
-        basket.addProduct(new SimpleProduct("Кофе", 200));
-        basket.addProduct(new FixPriceProduct("Сыр"));
-        basket.addProduct(new DiscountedProduct("Колбаса", 150, 10));
-        basket.addProduct(new SimpleProduct("Масло", 50));
-        // добавление продукта в переполненною корзину
-        basket.addProduct(new SimpleProduct("Картофель", 50));
+        addProductsToBasket(basket);
         // печать содержимого корзины
         basket.printProducts();
         // получение стоимости корзины
@@ -50,7 +45,7 @@ class App {
         }
 
         System.out.println("SearchEngine заполнение элементами для поиска");
-        SearchEngine engine = new SearchEngine(12);
+        SearchEngine engine = new SearchEngine(8);
         Searchable[] items = new Searchable[] {
                 new FixPriceProduct("Колбаса"),
                 new FixPriceProduct("Окорочка"),
@@ -66,13 +61,13 @@ class App {
         }
 
         System.out.println("SearchEngine поиск по подстроке <кол>:");
-        System.out.println(Arrays.toString(engine.search("кол")));
+        System.out.println(engine.search("кол"));
 
         System.out.println("SearchEngine поиск по подстроке <а>:");
-        System.out.println(Arrays.toString(engine.search("а")));
+        System.out.println(engine.search("а"));
 
         System.out.println("SearchEngine поиск по подстроке <фрукты>:");
-        System.out.println(Arrays.toString(engine.search("фрукты")));
+        System.out.println(engine.search("фрукты"));
 
         // Exceptions
         // некорректное указание скидки на продукт
@@ -109,5 +104,28 @@ class App {
         } catch (BestResultNotFound e) {
             System.out.println(e.getMessage());
         }
+
+        addProductsToBasket(basket);
+        basket.printProducts();
+        // удаление продуктов из корзины по имени
+        for(Product deleted: basket.deleteProductsByName("Сыр")) {
+            System.out.println(deleted.getName() + ": продукт удален из корзины.");
+        }
+        basket.printProducts();
+        // удаление несуществующего продукта
+        List<Product> deleted = basket.deleteProductsByName("Чай");
+        if(deleted.isEmpty()) {
+            System.out.println("Список пуст");
+        }
+        basket.printProducts();
+    }
+
+    private static void addProductsToBasket(ProductBasket basket) {
+        basket.addProduct(new SimpleProduct("Батон", 50));
+        basket.addProduct(new SimpleProduct("Кофе", 200));
+        basket.addProduct(new FixPriceProduct("Сыр"));
+        basket.addProduct(new DiscountedProduct("Колбаса", 150, 10));
+        basket.addProduct(new SimpleProduct("Масло", 50));
+        basket.addProduct(new SimpleProduct("Сыр", 200));
     }
 }
