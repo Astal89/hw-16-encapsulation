@@ -23,7 +23,7 @@ public class SearchEngine {
                 continue;
             }
             if (item.getSearchTerm().toLowerCase().contains(content.toLowerCase())) {
-                result.put(item.getSearchTerm(), item);
+                result.put(item.getName(), item);
             }
         }
         return result;
