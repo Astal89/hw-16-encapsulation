@@ -12,6 +12,7 @@ import org.skypro.skyshop.search.Searchable;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.SimpleTimeZone;
 
 class App {
@@ -61,13 +62,14 @@ class App {
         }
 
         System.out.println("SearchEngine поиск по подстроке <кол>:");
-        System.out.println(engine.search("кол"));
+        System.out.println(engine.search("кол").values());
+
 
         System.out.println("SearchEngine поиск по подстроке <а>:");
-        System.out.println(engine.search("а"));
+        System.out.println(engine.search("а").values());
 
         System.out.println("SearchEngine поиск по подстроке <фрукты>:");
-        System.out.println(engine.search("фрукты"));
+        System.out.println(engine.search("фрукты").values());
 
         // Exceptions
         // некорректное указание скидки на продукт
