@@ -3,27 +3,33 @@ package org.skypro.skyshop.search;
 import org.skypro.skyshop.exception.BestResultNotFound;
 import org.skypro.skyshop.product.Product;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 public class SearchEngine {
-    private final List<Searchable> items = new LinkedList<>();
+    private final Set<Searchable> items = new HashSet<>();
     private final int capacity;
 
     public SearchEngine(int capacity) {
         this.capacity = capacity;
     }
 
-    public TreeMap<String, Searchable> search(String content) {
-        TreeMap<String, Searchable> result = new TreeMap<>();
+    public Set<Searchable> search(String content) {
+        TreeSet<Searchable> result = new TreeSet<>((a1, a2) -> {
+            int lengthComparison = Integer.compare(
+                    a2.getName().length(),
+                    a1.getName().length()
+            );
+            if (lengthComparison == 0) {
+                return a1.getName().compareTo(a2.getName());
+            }
+            return lengthComparison;
+        });
         for (Searchable item : items) {
             if (item == null) {
                 continue;
             }
             if (item.getSearchTerm().toLowerCase().contains(content.toLowerCase())) {
-                result.put(item.getName(), item);
+                result.add(item);
             }
         }
         return result;
