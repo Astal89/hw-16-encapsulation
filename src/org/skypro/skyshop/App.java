@@ -62,14 +62,19 @@ class App {
         }
 
         System.out.println("SearchEngine поиск по подстроке <кол>:");
-        System.out.println(engine.search("кол").values());
-
+        for (Searchable item : engine.search("кол")) {
+            System.out.println(item);
+        }
 
         System.out.println("SearchEngine поиск по подстроке <а>:");
-        System.out.println(engine.search("а").values());
+        for (Searchable item : engine.search("а")) {
+            System.out.println(item);
+        }
 
         System.out.println("SearchEngine поиск по подстроке <фрукты>:");
-        System.out.println(engine.search("фрукты").values());
+        for (Searchable item : engine.search("фрукты")) {
+            System.out.println(item);
+        }
 
         // Exceptions
         // некорректное указание скидки на продукт
