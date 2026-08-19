@@ -26,48 +26,39 @@ public class ProductBasket {
 
     // получение общей стоимости корзины
     public int getTotalPrice() {
-        int totalPrice = 0;
-        for (Map.Entry<String, List<Product>> entry : products.entrySet()) {
-            List<Product> productList = entry.getValue();
-            for (var product : productList) {
-                if (product == null) {
-                    continue;
-                }
-                totalPrice += product.getPrice();
-            }
-        }
-        return totalPrice;
+        return products.values().stream()
+                .flatMap(List::stream)
+                .filter(Objects::nonNull)
+                .mapToInt(Product::getPrice)
+                .sum();
     }
 
     // количество специальных продуктов
-    public int getSpecialProductsCount() {
-        int specialProductsCount = 0;
-        for (Map.Entry<String, List<Product>> entry : products.entrySet()) {
-            List<Product> productList = entry.getValue();
-            for (var product : productList) {
-                if (product != null && product.isSpecial()) {
-                    specialProductsCount++;
-                }
-            }
-        }
-        return specialProductsCount;
+    public long getSpecialProductsCount() {
+        return products.values().stream()
+                .flatMap(List::stream)
+                .filter(Objects::nonNull)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     // печать содержимого корзины
     public void printProducts() {
-        boolean isEmpty = true;
-        for (Map.Entry<String, List<Product>> entry : products.entrySet()) {
-            List<Product> productList = entry.getValue();
-            for (var product : productList) {
-                if (product != null) {
-                    System.out.println(product);
-                    isEmpty = false;
-                }
-            }
-        }
+
+        boolean isEmpty = products.values().stream()
+                .flatMap(List::stream)
+                .filter(Objects::nonNull)
+                .findAny()
+                .isEmpty();
+
         if (isEmpty) {
             System.out.println("В корзине пусто");
         } else {
+            products.values().stream()
+                    .flatMap(List::stream)
+                    .filter(Objects::nonNull)
+                    .forEach(System.out::println);
+
             System.out.println("Итого: " + getTotalPrice());
             System.out.println("Специальных товаров: " + getSpecialProductsCount());
         }
